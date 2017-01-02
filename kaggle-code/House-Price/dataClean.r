@@ -1,5 +1,5 @@
 # Clean data of train set in the House-Price competition.
-# @author: turtome (qiangz2012@yeah.net).
+# @author: oucqiangz (qiangz2012@yeah.net).
 #
 
 # 1、load data and merge train & test set.
@@ -94,7 +94,7 @@ oriential_train <- oriential_train[c(-1299,-2550,-935,-250,-314,-336,-707,-298,-
 salePrices <- salePrices[c(-1299,-935,-250,-314,-336,-707,-298)]
 segRow <- 1453   # train:[1,1453];  test:[1454,len]
 
-# (2) check noise by feature value distribution hist.
+# (2) check noise by feature value distribution hist.i
 tempVec <- oriential_train[,1]
 featValueDist <- as.data.frame( table(tempVec) );
 #hist( x = tempVec, breaks = as.vector(featValueDist[,1]) )
@@ -180,59 +180,6 @@ len <- length(oriential_train[,1])
 final_test <- oriential_train[(segRow+1):len,]
 write.csv(final_test, file = "G:\\Mypro\\kaggle\\House-Price\\testSet.csv")
 print("DONE!")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
