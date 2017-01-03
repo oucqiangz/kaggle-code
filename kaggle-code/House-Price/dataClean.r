@@ -2,7 +2,7 @@
 # @author: oucqiangz (qiangz2012@yeah.net).
 #
 
-# 1、load data and merge train & test set.
+# 1.load data and merge train & test set.
 # train size : 1460
 oriential_train <- read.csv( file = "G:\\Mypro\\kaggle\\House-Price\\train.csv" )
 oriential_train <- subset( oriential_train, select = -Id )
@@ -15,7 +15,7 @@ oriential_test <- subset( oriential_test, select = -Id )
 oriential_train <- rbind(oriential_train, oriential_test)
 
 
-##### 2、process NA values.
+##### 2.process NA values.
 
 # (1) there are a lot of NA values in features "PoolQC" "Fence" "MiscFeature" "Alley" "MiscVal",
 # so remove these features from train set.
@@ -76,7 +76,7 @@ timeFeatIndex <- c(18,19,58,71,72)
 oriential_train <- fillNaNumByMode(oriential_train,timeFeatIndex)
 
 
-##### 3、process noise/outlier.
+##### 3.process noise/outlier.
 
 # (1) check outlier by feature value dot chart.
 tarCol <- 3
@@ -94,13 +94,22 @@ oriential_train <- oriential_train[c(-1299,-2550,-935,-250,-314,-336,-707,-298,-
 salePrices <- salePrices[c(-1299,-935,-250,-314,-336,-707,-298)]
 segRow <- 1453   # train:[1,1453];  test:[1454,len]
 
-# (2) check noise by feature value distribution hist.i
+# (2) check noise by feature value distribution hist.
 tempVec <- oriential_train[,1]
 featValueDist <- as.data.frame( table(tempVec) );
 #hist( x = tempVec, breaks = as.vector(featValueDist[,1]) )
 
+# save cleaned data.
+train_clean <- oriential_train[1:segRow,]
+train_clean <- cbind(train_clean,salePrices)
+write.csv(train_clean, file = "G:\\Mypro\\GitHub\\kaggle-code\\House-Price\\train_clean.csv")
+len <- length(oriential_train[,1])
+test_clean <- oriential_train[(segRow+1):len,]
+write.csv(test_clean, file = "G:\\Mypro\\GitHub\\kaggle-code\\House-Price\\test_clean.csv")
+print("Save cleaned data done!!!")
 
-##### 4、data transform.
+
+##### 4.data transform.
 # (1) numberial feature : nomalization.
 minMaxNorm <- function(x) {
   x <- (x-min(x))/(max(x)-min(x))
@@ -171,21 +180,14 @@ oriential_train <- dummy.data.frame(data = oriential_train, drop = FALSE,
 # (4) time feature : continuous or discrete.
 # we will process time feature in feature engineer.
 
-
-##### divide train and test,then write to csv file.
-final_train <- oriential_train[1:segRow,]
-final_train <- cbind(final_train,salePrices)
-write.csv(final_train, file = "G:\\Mypro\\kaggle\\House-Price\\trainSet.csv")
+# save data.
+train_1 <- oriential_train[1:segRow,]
+train_1 <- cbind(train_1,salePrices)
+write.csv(train_1, file = "G:\\Mypro\\GitHub\\kaggle-code\\House-Price\\train_1.csv")
 len <- length(oriential_train[,1])
-final_test <- oriential_train[(segRow+1):len,]
-write.csv(final_test, file = "G:\\Mypro\\kaggle\\House-Price\\testSet.csv")
-print("DONE!")
-
-
-
-
-
-
+test_1 <- oriential_train[(segRow+1):len,]
+write.csv(test_1, file = "G:\\Mypro\\GitHub\\kaggle-code\\House-Price\\test_1.csv")
+print("train data done!")
 
 
 
