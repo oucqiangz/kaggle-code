@@ -3,7 +3,7 @@
 
 
 # load train data.
-train_set <- read.csv( file = "G:\\Mypro\\GitHub\\kaggle-code\\House-Price\\train_1.csv" )
+train_set <- read.csv( file = "D:\\GitHub\\kaggle-code\\House-Price\\train_1.csv" )
 train_set <- train_set[,-1]
 train_set <- as.data.frame(train_set)
 
@@ -56,7 +56,8 @@ print(rmse.min)   #20535.77
 rmse.1se <- myValid(x = as.matrix(x_valid), y = y_valid, model = model.1se)
 print(rmse.1se)   #25597.09
 
-
+# feature weights after selection.
+print(model.min$beta)
 
 
 
